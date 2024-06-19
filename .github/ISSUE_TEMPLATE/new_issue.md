@@ -1,3 +1,11 @@
+---
+name: New Issue
+about: Task to be accomplished
+title: ""
+labels: ""
+assignees: ""
+---
+
 **As a** [role]  
 **I need** [function]  
 **So that** [benefit]
