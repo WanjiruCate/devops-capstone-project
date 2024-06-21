@@ -151,9 +151,8 @@ def delete_account(account_id):
 
         app.logger.info("Account deleted")
 
-        return make_response(
-            jsonify(""), status.HTTP_204_NO_CONTENT, 
-        )
+        return "", status.HTTP_204_NO_CONTENT
+        
     else:
         app.logger.info("No account to be deleted")
 
