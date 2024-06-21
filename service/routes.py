@@ -118,7 +118,6 @@ def update_account(account_id):
     app.logger.info("Update Accounts")
 
     account_details = Account.find(account_id)
-    print("xxxxxxxx", account_details)
 
     if account_details:
         account_details.deserialize(request.get_json())
@@ -141,7 +140,24 @@ def update_account(account_id):
 ######################################################################
 
 # ... place you code here to DELETE an account ...
+@app.route("/accounts/<int:account_id>", methods=["DELETE"])
+def delete_account(account_id):
+    app.logger.info("Delete Accounts")
 
+    account_details = Account.find(account_id)
+
+    if account_details:
+        account_details.delete()
+
+        app.logger.info("Account deleted")
+
+        return make_response(
+            jsonify(""), status.HTTP_204_NO_CONTENT, 
+        )
+    else:
+        app.logger.info("No account to be deleted")
+
+        return
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
