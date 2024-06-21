@@ -57,6 +57,7 @@ def create_accounts():
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
 
+
 ######################################################################
 # LIST ALL ACCOUNTS
 ######################################################################
@@ -74,13 +75,9 @@ def list_accounts():
 
     if accounts:
         account_list = [account.serialize() for account in accounts]
-        return make_response(
-            jsonify(account_list), status.HTTP_200_OK
-        )
+        return make_response(jsonify(account_list), status.HTTP_200_OK)
     else:
-        return make_response(
-            jsonify([]), status.HTTP_200_OK
-        )
+        return make_response(jsonify([]), status.HTTP_200_OK)
 
 
 ######################################################################
@@ -93,10 +90,6 @@ def read_account(account_id):
     app.logger.info("Read Accounts")
 
     account_details = Account.find(account_id)
-
-    # Uncomment once get_accounts has been implemented
-    # location_url = url_for("get_accounts", account_id=account.id, _external=True)
-    location_url = "/"  # Remove once get_accounts has been implemented
 
     if account_details:
         message = account_details.serialize()
@@ -152,11 +145,12 @@ def delete_account(account_id):
         app.logger.info("Account deleted")
 
         return "", status.HTTP_204_NO_CONTENT
-        
+
     else:
         app.logger.info("No account to be deleted")
 
         return
+
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
