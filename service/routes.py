@@ -105,7 +105,6 @@ def read_account(account_id):
         return make_response(
             jsonify({"message": "Account not found"}),
             status.HTTP_404_NOT_FOUND,
-            {"Location": location_url},
         )
 
 
@@ -114,6 +113,28 @@ def read_account(account_id):
 ######################################################################
 
 # ... place you code here to UPDATE an account ...
+@app.route("/accounts/<int:account_id>", methods=["PUT"])
+def update_account(account_id):
+    app.logger.info("Update Accounts")
+
+    account_details = Account.find(account_id)
+    print("xxxxxxxx", account_details)
+
+    if account_details:
+        account_details.deserialize(request.get_json())
+        account_details.update()
+        message = account_details.serialize()
+
+        return make_response(
+            jsonify(message),
+            status.HTTP_200_OK,
+        )
+    else:
+        return make_response(
+            jsonify({"message": "Account not found"}),
+            status.HTTP_404_NOT_FOUND,
+        )
+
 
 ######################################################################
 # DELETE AN ACCOUNT
