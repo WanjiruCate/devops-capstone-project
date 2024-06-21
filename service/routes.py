@@ -4,7 +4,7 @@ Account Service
 This microservice handles the lifecycle of Accounts
 """
 # pylint: disable=unused-import
-from flask import jsonify, request, make_response, abort, url_for   # noqa; F401
+from flask import jsonify, request, make_response, abort, url_for  # noqa; F401
 from service.models import Account
 from service.common import status  # HTTP Status Codes
 from . import app  # Import Flask application
@@ -57,18 +57,37 @@ def create_accounts():
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
 
+
 ######################################################################
 # LIST ALL ACCOUNTS
 ######################################################################
 
 # ... place you code here to LIST accounts ...
 
-
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
 
 # ... place you code here to READ an account ...
+@app.route("/accounts/<int:account_id>", methods=["GET"])
+def read_account(account_id):
+    app.logger.info("Read Accounts")
+
+    account_details = Account.find(account_id)
+
+    # Uncomment once get_accounts has been implemented
+    # location_url = url_for("get_accounts", account_id=account.id, _external=True)
+    location_url = "/"  # Remove once get_accounts has been implemented
+
+    if account_details:
+        message = account_details.serialize()
+        return make_response(jsonify(message), status.HTTP_200_OK)
+    else:
+        return make_response(
+            jsonify({"message": "Account not found"}),
+            status.HTTP_404_NOT_FOUND,
+            {"Location": location_url},
+        )
 
 
 ######################################################################
@@ -76,7 +95,6 @@ def create_accounts():
 ######################################################################
 
 # ... place you code here to UPDATE an account ...
-
 
 ######################################################################
 # DELETE AN ACCOUNT
